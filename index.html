@@ -3,260 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nothing Official</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400&family=JetBrains+Mono:wght@100&display=swap" rel="stylesheet">
-
+    <title>nothin | Entry</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100&family=Inter:wght@200;400&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #000000;
-            --accent: #ffffff;
-            --border: #222222;
-            --gray: #888888;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: var(--accent); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-        .hidden { display: none !important; }
-
-        /* --- MINIMALIST TYPING LOADER --- */
-        #loader {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-        }
-
-        #nothing-text {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 100;
-            font-size: 0.9rem; /* Small and thin */
-            letter-spacing: 0.5rem;
-            text-transform: lowercase;
-            color: var(--accent);
-        }
-
-        /* --- PREMIUM HEADER --- */
-        header {
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            z-index: 999;
-        }
-
-        /* Humberger Left */
-        .humberger {
-            cursor: pointer;
-            width: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .humberger span {
-            width: 100%;
-            height: 1px;
-            background: var(--accent);
-        }
-
-        /* Logo Right */
-        .logo-img {
-            height: 18px; /* Small, elegant logo height */
-            opacity: 0.9;
-        }
-
-        /* --- CLEAN LOGIN VIEW --- */
-        #login-view {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-card {
-            width: 100%;
-            max-width: 320px;
-            text-align: center;
-        }
-
-        .login-card h2 {
-            font-weight: 100;
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            letter-spacing: 2px;
-        }
-
-        input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--border);
-            padding: 12px 0;
-            margin-bottom: 20px;
-            color: white;
-            font-weight: 300;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input:focus { border-bottom-color: var(--accent); }
-
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background: white;
-            color: black;
-            border: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: 0.3s;
-        }
-
-        .login-btn:hover { background: #ccc; }
-
-        /* --- PRODUCT GRID --- */
-        .store-container { padding: 120px 40px 40px; }
+        :root { --bg: #000; --accent: #fff; --gray: #111; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: var(--accent); display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
         
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 40px;
-        }
+        #loader { text-align: center; }
+        #typing { font-family: 'JetBrains Mono', monospace; font-size: 1rem; letter-spacing: 8px; border-right: 1px solid #fff; white-space: nowrap; overflow: hidden; width: 0; animation: type 0.8s steps(7) forwards, blink 0.5s infinite; }
+        @keyframes type { from { width: 0 } to { width: 120px } }
+        @keyframes blink { 50% { border-color: transparent } }
 
-        .product-card {
-            border: 1px solid var(--border);
-            padding: 20px;
-            transition: 0.4s;
-        }
-
-        .product-card:hover { border-color: var(--gray); }
-
-        .product-card img { 
-            width: 100%; 
-            height: 300px; 
-            object-fit: contain; 
-            margin-bottom: 20px;
-            filter: grayscale(100%);
-            transition: 0.5s;
-        }
-
-        .product-card:hover img { filter: grayscale(0%); }
-
-        .product-card h4 { font-weight: 300; font-size: 0.9rem; color: var(--gray); }
-        .price { font-weight: 400; font-size: 1rem; margin-top: 5px; display: block; }
+        .auth-card { width: 320px; text-align: center; display: none; }
+        input { width: 100%; background: var(--gray); border: 1px solid #222; padding: 15px; color: #fff; margin-bottom: 10px; outline: none; font-size: 0.8rem; border-radius: 4px; }
+        .btn { width: 100%; padding: 15px; background: #fff; color: #000; border: none; cursor: pointer; font-weight: 600; margin-top: 10px; border-radius: 4px; }
+        .toggle { font-size: 0.7rem; color: #555; margin-top: 20px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
-    <div id="loader">
-        <h1 id="nothing-text"></h1>
+    <div id="loader"><h1 id="typing">nothin</h1></div>
+
+    <div class="auth-card" id="authUI">
+        <h2 style="font-weight: 200; margin-bottom: 40px; letter-spacing: 5px;">AUTHENTICATE</h2>
+        <input type="email" id="email" placeholder="EMAIL">
+        <input type="password" id="password" placeholder="PASSWORD">
+        <button class="btn" id="loginBtn">SIGN IN</button>
+        <p class="toggle" id="toggleBtn">Create Account</p>
     </div>
 
-    <header id="navbar" class="hidden">
-        <div class="humberger">
-            <span></span>
-            <span></span>
-        </div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Nothing_Logo.svg" alt="Nothing" class="logo-img">
-    </header>
-
-    <main id="login-view">
-        <div class="login-card">
-            <h2>AUTHENTICATE</h2>
-            <input type="email" id="email" placeholder="EMAIL">
-            <input type="password" id="password" placeholder="PASSWORD">
-            <button id="loginBtn" class="login-btn">CONTINUE</button>
-        </div>
-    </main>
-
-    <main id="store-view" class="hidden">
-        <div class="store-container">
-            <div class="product-grid" id="grid">
-                </div>
-        </div>
-    </main>
-
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        // If you have Firebase, paste config here. If not, it will default to manual login.
+        const loader = document.getElementById('loader');
+        const authUI = document.getElementById('authUI');
 
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            appId: "YOUR_APP_ID"
+        window.onload = () => {
+            setTimeout(() => {
+                // Simulate checking login status
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                if(isLoggedIn === 'true') {
+                    window.location.href = 'product.html';
+                } else {
+                    loader.style.display = 'none';
+                    authUI.style.display = 'block';
+                }
+            }, 2000);
         };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        // --- TYPING ANIMATION (FAST & THIN) ---
-        const textElement = document.getElementById('nothing-text');
-        const word = "nothing";
-        let index = 0;
-
-        function type() {
-            if (index < word.length) {
-                textElement.textContent += word.charAt(index);
-                index++;
-                setTimeout(type, 100); 
-            } else {
-                setTimeout(() => {
-                    const loader = document.getElementById('loader');
-                    loader.style.transition = 'opacity 1s';
-                    loader.style.opacity = '0';
-                    setTimeout(() => loader.style.display = 'none', 1000);
-                }, 800);
-            }
-        }
-        window.onload = type;
-
-        // --- LOGIN & VIEW LOGIC ---
-        document.getElementById('loginBtn').addEventListener('click', async () => {
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('password').value;
-            try {
-                // await signInWithEmailAndPassword(auth, email, pass);
-                unlock();
-            } catch (err) { alert(err.message); }
-        });
-
-        function unlock() {
-            document.getElementById('login-view').classList.add('hidden');
-            document.getElementById('navbar').classList.remove('hidden');
-            document.getElementById('store-view').classList.remove('hidden');
-            load();
-        }
-
-        function load() {
-            const grid = document.getElementById('grid');
-            const items = [
-                { name: "Phone (2)", price: "Rs. 74,999", img: "https://nothing.tech/cdn/shop/files/Phone_2-White-Front_1000x.png" },
-                { name: "Ear (a)", price: "Rs. 14,999", img: "https://nothing.tech/cdn/shop/files/Ear_a_-Black-Front_1000x.png" },
-                { name: "Watch Pro", price: "Rs. 9,999", img: "https://nothing.tech/cdn/shop/files/Watch-Pro-Dark-Grey-Front_1000x.png" }
-            ];
-
-            grid.innerHTML = items.map(p => `
-                <div class="product-card">
-                    <img src="${p.img}">
-                    <h4>${p.name}</h4>
-                    <span class="price">${p.price}</span>
-                </div>
-            `).join('');
-        }
+        document.getElementById('loginBtn').onclick = () => {
+            localStorage.setItem('isLoggedIn', 'true');
+            window.location.href = 'product.html';
+        };
     </script>
 </body>
 </html>
