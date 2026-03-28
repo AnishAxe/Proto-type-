@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nothin | Official Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #000; --accent: #fff; --gray: #111; --error: #ff0000; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: var(--accent); overflow-x: hidden; }
+
+        /* HEADER */
+        header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray); position: sticky; top: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); z-index: 1000; }
+        .logo-box { display: flex; align-items: center; gap: 10px; }
+        .logo-img { width: 30px; height: 30px; border-radius: 5px; object-fit: cover; }
+        .logo-text { font-size: 1.6rem; font-weight: 900; letter-spacing: -2px; cursor: pointer; }
+        
+        .humberger { cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
+        .humberger span { width: 24px; height: 2px; background: #fff; transition: 0.3s; }
+        .humberger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .humberger.open span:nth-child(2) { opacity: 0; }
+        .humberger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* VIEWS CONTROL */
+        #store-view, #details-view { width: 100%; transition: 0.4s; }
+        #details-view { display: none; padding-bottom: 120px; }
+
+        /* STORE GRID */
+        .search-container { padding: 20px; }
+        .search-container input { width: 100%; background: var(--gray); border: 1.5px solid #222; padding: 18px; color: #fff; border-radius: 12px; outline: none; font-weight: 700; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
+        .p-card { background: #080808; border: 1px solid var(--gray); border-radius: 20px; padding: 20px; text-align: center; }
+        .p-card img { width: 100%; height: 160px; object-fit: contain; border-radius: 12px; margin-bottom: 15px; }
+        .p-card h3 { font-size: 0.9rem; font-weight: 900; text-transform: uppercase; }
+
+        /* DETAILS VIEW UI */
+        .back-btn { padding: 20px; cursor: pointer; font-weight: 900; font-size: 0.8rem; letter-spacing: 2px; }
+        .details-img-box { width: 100%; height: 40vh; background: #050505; display: flex; align-items: center; justify-content: center; }
+        .details-img-box img { max-height: 80%; }
+        .details-content { padding: 30px; }
+        .details-content h1 { font-size: 2.5rem; font-weight: 900; letter-spacing: -2px; }
+        .details-content .price { font-size: 1.5rem; color: #666; margin-bottom: 40px; font-weight: 700; }
+
+        .label { font-size: 0.7rem; font-weight: 900; letter-spacing: 2px; color: #444; margin: 25px 0 15px; display: block; text-transform: uppercase; }
+        
+        .selector { display: flex; flex-wrap: wrap; gap: 10px; }
+        .opt { flex: 1; min-width: 80px; padding: 15px; border: 1.5px solid #111; text-align: center; font-size: 0.75rem; font-weight: 900; cursor: pointer; border-radius: 10px; transition: 0.2s; }
+        .opt.active { background: #fff; color: #000; border-color: #fff; }
+        .opt.error-border { border-color: var(--error); }
+
+        .qty-row { display: flex; align-items: center; gap: 20px; }
+        .qty-btn { width: 50px; height: 50px; background: #111; border: 1px solid #222; font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; justify-content: center; border-radius: 10px; cursor: pointer; }
+        #qtyVal { font-weight: 900; font-size: 1.5rem; min-width: 30px; text-align: center; }
+
+        /* ERROR TEXT */
+        .err-msg { color: var(--error); font-weight: 900; font-size: 0.8rem; margin-top: 10px; display: none; text-transform: uppercase; }
+
+        /* ADD TO BAG FOOTER */
+        .cart-footer { position: fixed; bottom: 0; width: 100%; background: rgba(0,0,0,0.9); border-top: 1.5px solid #111; padding: 20px 30px; backdrop-filter: blur(10px); }
+        .add-btn { width: 100%; height: 70px; background: #fff; color: #000; border: none; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; border-radius: 15px; cursor: pointer; }
+
+        /* NAVIGATION */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #000; display: flex; justify-content: space-around; padding: 25px 0; border-top: 1px solid #111; z-index: 99; }
+        .bottom-nav a { color: #444; text-decoration: none; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; }
+        .bottom-nav a.active { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-box" onclick="showStore()">
+            <img src="BF2F8B72-CA4E-47A4-86DD-61113314088B.jpeg" class="logo-img" onerror="this.style.display='none'">
+            <div class="logo-text">nothin.</div>
+        </div>
+        <div class="humberger" id="menuBtn"><span></span><span></span><span></span></div>
+    </header>
+
+    <div id="store-view">
+        <div class="search-container">
+            <input type="text" placeholder="SEARCH PRODUCTS...">
+        </div>
+        <p style="padding: 20px; font-size: 0.7rem; font-weight: 900; color: #444; letter-spacing: 2px;">COLLECTIONS</p>
+        <div class="grid">
+            <div class="p-card" onclick="showDetails()">
+                <img src="3B8AFBDF-D5C1-46E0-A0E2-A5C84A59ABBC.jpeg" alt="T-Shirt">
+                <h3>NOTHIN T-SHIRT</h3>
+                <p style="color: #666; font-weight: 900; margin-top: 5px;">RS. 799</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="details-view">
+        <div class="back-btn" onclick="showStore()">← BACK TO STORE</div>
+        
+        <div class="details-img-box">
+            <img src="3B8AFBDF-D5C1-46E0-A0E2-A5C84A59ABBC.jpeg">
+        </div>
+
+        <div class="details-content">
+            <h1>NOTHIN T-SHIRT</h1>
+            <p class="price">RS. 799</p>
+
+            <span class="label">Choose Color</span>
+            <div class="selector" id="colorSelect">
+                <div class="opt" onclick="select(this, 'color')">BLACK</div>
+                <div class="opt" onclick="select(this, 'color')">WHITE</div>
+                <div class="opt" onclick="select(this, 'color')">GREY</div>
+            </div>
+            <p id="colorErr" class="err-msg">** ERROR: COLOR NOT SELECTED **</p>
+
+            <span class="label">Choose Size</span>
+            <div class="selector" id="sizeSelect">
+                <div class="opt" onclick="select(this, 'size')">MEDIUM</div>
+                <div class="opt" onclick="select(this, 'size')">2XL</div>
+                <div class="opt" onclick="select(this, 'size')">3XL</div>
+                <div class="opt" onclick="select(this, 'size')">4XL</div>
+            </div>
+            <p id="sizeErr" class="err-msg">** ERROR: SIZE NOT SELECTED **</p>
+
+            <span class="label">Quantity</span>
+            <div class="qty-row">
+                <div class="qty-btn" onclick="changeQty(-1)">-</div>
+                <div id="qtyVal">1</div>
+                <div class="qty-btn" onclick="changeQty(1)">+</div>
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <button class="add-btn" onclick="addToBag()">ADD TO BAG</button>
+        </div>
+    </div>
+
+    <nav class="bottom-nav" id="mainNav">
+        <a href="#" class="active">Discover</a>
+        <a href="#">Cart</a>
+        <a href="#">Account</a>
+    </nav>
+
+    <script>
+        let selectedColor = null;
+        let selectedSize = null;
+        let quantity = 1;
+
+        // View Switching
+        function showDetails() {
+            document.getElementById('store-view').style.display = 'none';
+            document.getElementById('mainNav').style.display = 'none';
+            document.getElementById('details-view').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function showStore() {
+            document.getElementById('store-view').style.display = 'block';
+            document.getElementById('mainNav').style.display = 'flex';
+            document.getElementById('details-view').style.display = 'none';
+        }
+
+        // Selection Logic
+        function select(el, type) {
+            const parent = el.parentElement;
+            parent.querySelectorAll('.opt').forEach(o => {
+                o.classList.remove('active');
+                o.classList.remove('error-border');
+            });
+            el.classList.add('active');
+            
+            if(type === 'color') {
+                selectedColor = el.innerText;
+                document.getElementById('colorErr').style.display = 'none';
+            } else {
+                selectedSize = el.innerText;
+                document.getElementById('sizeErr').style.display = 'none';
+            }
+        }
+
+        // Quantity Logic
+        function changeQty(n) {
+            quantity += n;
+            if(quantity < 1) quantity = 1;
+            document.getElementById('qtyVal').innerText = quantity;
+        }
+
+        // Error & Cart Logic
+        function addToBag() {
+            let hasError = false;
+
+            if(!selectedColor) {
+                document.getElementById('colorErr').style.display = 'block';
+                document.getElementById('colorSelect').querySelectorAll('.opt').forEach(o => o.classList.add('error-border'));
+                hasError = true;
+            }
+            if(!selectedSize) {
+                document.getElementById('sizeErr').style.display = 'block';
+                document.getElementById('sizeSelect').querySelectorAll('.opt').forEach(o => o.classList.add('error-border'));
+                hasError = true;
+            }
+
+            if(!hasError) {
+                alert(`SUCCESS: ${quantity}x ${selectedColor} T-Shirt (Size ${selectedSize}) added to bag.`);
+            }
+        }
+
+        // Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        menuBtn.onclick = () => menuBtn.classList.toggle('open');
+    </script>
+</body>
+</html>
